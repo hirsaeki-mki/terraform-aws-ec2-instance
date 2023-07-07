@@ -115,9 +115,9 @@ output "tags_all" {
   )
 }
 
-output "spot_instance_id" {
-  description = "The Instance ID (if any) that is currently fulfilling the Spot Instance request"
-  value       = try(aws_instance.this[0].spot_instance_id, null)
+output "spot_instance_request_id" {
+  description = "Spot Instance request Id for the instance"
+  value       = try(aws_instance.this[0].spot_instance_request_id, null)
 }
 
 output "ami" {
