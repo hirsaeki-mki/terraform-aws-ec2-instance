@@ -17,7 +17,7 @@ data "aws_ssm_parameter" "this" {
 ################################################################################
 
 resource "aws_instance" "this" {
-  count = local.create && !var.ignore_ami_changes && !var.create_spot_instance ? 1 : 0
+  count = local.create && !var.ignore_ami_changes ? 1 : 0
 
   ami                  = try(coalesce(var.ami, nonsensitive(data.aws_ssm_parameter.this[0].value)), null)
   instance_type        = var.instance_type
@@ -197,7 +197,7 @@ resource "aws_instance" "this" {
 ################################################################################
 
 resource "aws_instance" "ignore_ami" {
-  count = local.create && var.ignore_ami_changes && !var.create_spot_instance ? 1 : 0
+  count = local.create && var.ignore_ami_changes ? 1 : 0
 
   ami                  = try(coalesce(var.ami, nonsensitive(data.aws_ssm_parameter.this[0].value)), null)
   instance_type        = var.instance_type
